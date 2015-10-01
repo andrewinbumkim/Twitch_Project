@@ -9,7 +9,7 @@ class ChannelObject {
     this.subscribers.push(sub)
   }  
   broadcastToSubscribers(message) {
-    this.subscribers.forEach(function(appClient) {
+    this.subscribers.forEach(function (appClient) {
       appClient.send(message)
     })
   }
@@ -25,8 +25,10 @@ class AppClient {
   }
   send(message) {
     try{
-        this.ws.send(message)
-    } catch (e) {}
+      this.ws.send(message)
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 
@@ -53,19 +55,11 @@ defaultChannels.forEach(function(channel){
   initializeDefaultChannel(channel)
 })
 
-
-//twitchClient.join("#voyboy");
-
-//allChannels.set("voyboy", new ChannelObject("voyboy"));
-
-
 twitchClient.addListener("message", function(user, channel, message){
-
   console.log(channel, " ", user, " ", message);
   var msg = {"user":user, "channel":channel, "message":message}
 
   allChannels.get(channel.substring(1)).broadcastToSubscribers(JSON.stringify(msg));
-
 })
 
 wss.on("connection", function connection(ws){
@@ -74,6 +68,7 @@ wss.on("connection", function connection(ws){
 
   ws.on("message", function(message) {
     //check if message is valid string
+    console.log("Recieved message: " + message)
     if(allChannels.has(message)) {
       allChannels.get(message).addSubscriber(theClient);
     } else {
