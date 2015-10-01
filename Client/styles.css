@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue';
+    font-size: 12px;
+    line-height: 20px;
+}
+
+body {
+    overflow-y: none;
+    background-color: #F2F2F2;
+}
+
+#message-container {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.entry-element:nth-of-type(1) {
+    padding-top: 12px;
+}
+
+.entry-element {
+    padding-right: 20px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    margin-top: -3px;
+    margin-bottom: -3px;
+}
+
+.username-element {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.message-element {
+    width: 100%;
+    word-wrap: break-word;
+}
