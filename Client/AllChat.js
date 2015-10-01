@@ -7,11 +7,16 @@ var usernameColors = new Map();
 var messageContainer = $("#message-container")[0]
 
 messageContainer.addEventListener("wheel", function(){
-    if (this.scrollHeight - this.scrollTop === window.innerHeight) {
-        bottomLock = true
-    } else {
-        bottomLock = false
-    }
+  if (this.scrollHeight - this.scrollTop === window.innerHeight) {
+      bottomLock = true
+  } else {
+      bottomLock = false
+  }
+})
+
+var port = chrome.runtime.connect({"name":"test"})
+port.onMessage.addListener(function (msg){
+  messageContainer.addMessage(msg)
 })
 
 messageContainer.addMessage = function(msgObj) {
@@ -43,6 +48,6 @@ function randomColor() {
   return "#" + colors[Math.floor(Math.random()*colors.length)]
 }
 
-var ws = new WebSocket("ws://52.8.234.66:3434")
-//var ws = new WebSocket("ws://52.8.54.187:3434")
-ws.addEventListener("message", function(event) {messageContainer.addMessage(event.data)})
+// var ws = new WebSocket("ws://52.8.234.66:3434")
+// //var ws = new WebSocket("ws://52.8.54.187:3434")
+// ws.addEventListener("message", function(event) {messageContainer.addMessage(event.data)})
