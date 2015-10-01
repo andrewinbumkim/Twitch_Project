@@ -24,6 +24,7 @@ class AppClient {
     subscriptions.push(channelName)
   }
   send(message) {
+    console.log("AppClient.send called")
     try{
       this.ws.send(message)
     } catch (e) {
@@ -56,7 +57,7 @@ defaultChannels.forEach(function(channel){
 })
 
 twitchClient.addListener("message", function(user, channel, message){
-  console.log(channel, " ", user, " ", message);
+  //console.log(channel, " ", user, " ", message);
   var msg = {"user":user, "channel":channel, "message":message}
 
   allChannels.get(channel.substring(1)).broadcastToSubscribers(JSON.stringify(msg));
