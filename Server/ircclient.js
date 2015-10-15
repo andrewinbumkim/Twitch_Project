@@ -30,6 +30,7 @@ class AppClient {
     } catch (e) {
       console.error(e)
     }
+    console.log("AppClient.send finished execution")
   }
 }
 
