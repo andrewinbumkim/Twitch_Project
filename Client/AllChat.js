@@ -6,6 +6,16 @@ var bottomLock = true
 var usernameColors = new Map();
 var messageContainer = $("#message-container")[0]
 
+var moreM = document.createElement("div")
+moreM.classList.add("moreMessagesIndicator")
+moreM.textContent = "More messages below."
+moreM.addEventListener("click", function() {
+  bottomLock = true;
+  moreM.style.display="none"
+  messageContainer.scrollTop = messageContainer.scrollHeight
+})
+messageContainer.appendChild(moreM)
+
 messageContainer.addEventListener("wheel", function(){
   if (this.scrollHeight - this.scrollTop === window.innerHeight) {
       bottomLock = true
@@ -31,7 +41,8 @@ messageContainer.addMessage = function(msgObj) {
   message.textContent = ": " + messageObject.message
   entry.appendChild(username)
   entry.appendChild(message)
-  messageContainer.appendChild(entry)  
+  messageContainer.appendChild(entry)
+
   if (usernameColors.has(username.textContent)) {
       username.style.color = usernameColors.get(username.textContent)
   } else {
