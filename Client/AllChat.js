@@ -64,3 +64,9 @@ function randomColor() {
 var ws = new WebSocket("ws://52.8.234.66:3434")
 //var ws = new WebSocket("ws://52.8.54.187:3434")
 ws.addEventListener("message", function(event) {messageContainer.addMessage(event.data)})
+
+var port = chrome.runtime.connect({"name":"test"})
+var p = setInterval(function () {
+  var date = new Date()
+  port.postMessage(+date)
+}, 1000)

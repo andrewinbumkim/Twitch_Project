@@ -11,7 +11,7 @@ ws.addEventListener("message", function (message){
   if (!allChannels.has(messageObject.channel)) {
   	allChannels.set(messageObject.channel, new Array())
   	//port.postMessage(message)
-  } 
+  }
   allChannels.get(messageObject.channel).push(messageObject)
 })
 
@@ -19,13 +19,13 @@ var wsListeners = {
   "message" : function(message){
     var messageObject = JSON.parse(message)
     if (!allChannels.has(messageObject.user)) {
-      allChannels.set(messageObject.user, new Array()) 
+      allChannels.set(messageObject.user, new Array())
     }
     allChannels.get(messageObject.user).push(messageObject)
   },
   "close" : function(){
     console.error("Websocket connection lost " + (new Date()).toValue())
-    var ws = new WebSocket(wsURL)
+    ws = new WebSocket(wsURL)
     for (var prop in wsListeners) {
     	ws.addEventListener(prop, wsListeners[prop])
     }
@@ -34,3 +34,10 @@ var wsListeners = {
     console.error(e)
   }
 }
+
+chrome.runtime.onConnect.addListener(function (port) {
+  console.assert(port.name === "test")
+  port.onMessage.addListener(function (message) {
+    console.log(message)
+  })
+})
